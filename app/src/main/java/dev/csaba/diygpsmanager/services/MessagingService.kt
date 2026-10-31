@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dev.csaba.diygpsmanager.R
@@ -49,7 +50,7 @@ class MessagingService : FirebaseMessagingService() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
         val largeIcon = BitmapFactory.decodeResource(
             resources,
@@ -68,8 +69,7 @@ class MessagingService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
 
         // Set notification color to match your app color template
-        // Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-        notificationBuilder.color = resources.getColor(R.color.colorAccent)
+        notificationBuilder.color = ContextCompat.getColor(this, R.color.colorAccent)
         notificationManager.notify(notificationID, notificationBuilder.build())
     }
 

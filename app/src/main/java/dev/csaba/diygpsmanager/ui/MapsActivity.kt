@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
-import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -76,9 +75,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Timber.d("onMapReady for $assetId with look back $lookBackMinutes mins")
             val lookBackDate = Date(System.currentTimeMillis() - 60 * lookBackMinutes * 1000)
             viewModel = MapsViewModel(appSingleton.firestore!!, assetId, lookBackDate)
-            viewModel.reportList.observe(this, {
+            viewModel.reportList.observe(this) {
                 addPins(it)
-            })
+            }
         }
     }
 
@@ -173,7 +172,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mapIntent.setPackage("com.google.android.apps.maps")
             mapIntent.setClassName("com.google.android.apps.maps",
                 "com.google.android.maps.MapsActivity")
-            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            if (mapIntent.resolveActivity(packageManager) != null) {
                 startActivity(mapIntent)
             }
         }
@@ -228,6 +227,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Check if location permissions are granted and if so enable the
         // location data layer.
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
