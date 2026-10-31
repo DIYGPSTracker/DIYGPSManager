@@ -20,16 +20,16 @@ plugins {
 }
 
 android {
-    namespace 'dev.csaba.diygpsmanager'
-    compileSdk versions.compileSdk
+    namespace = 'dev.csaba.diygpsmanager'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "dev.csaba.diygpsmanager"
-        minSdk versions.minSdk
-        targetSdk versions.targetSdk
-        versionCode 3
-        versionName "1.2"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "dev.csaba.diygpsmanager"
+        minSdk = 26
+        targetSdk = 36
+        versionCode = 3
+        versionName = "1.2"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
